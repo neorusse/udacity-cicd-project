@@ -141,10 +141,16 @@ jobs:
 
   configure-infrastructure:
     docker:
-      - image: cimg/base:stable
+      - image: python:3.8-alpine3.15 
     steps:
       - checkout
-      - install_ansible
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update nodejs npm curl
+            apk add --update --no-cache python3 py3-pip
+            /usr/local/bin/python -m pip install --upgrade pip
+            pip install awscli
       - add_ssh_keys: 
           fingerprints: ["c4:84:ca:74:57:67:65:10:97:29:9c:55:dc:e1:a1:b6"]
       - attach_workspace:
