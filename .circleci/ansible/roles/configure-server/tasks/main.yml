@@ -1,0 +1,17 @@
+- name: "Get NodeJS v13"
+  become: true
+  shell: |
+    curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+      
+- name: "Install NodeJS v13"
+  become: true
+  apt:
+    name: ["nodejs"]
+    state: latest
+    update_cache: yes
+
+- name: "Install pm2 - process mgr for prod Node.js app"
+  npm:
+    name: pm2
+    global: yes
+    production: yes
