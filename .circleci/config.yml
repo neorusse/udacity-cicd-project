@@ -141,9 +141,10 @@ jobs:
 
   configure-infrastructure:
     docker:
-      - image: python:3.8-alpine3.15
+      - image: cimg/base:stable
     steps:
       - checkout
+      - install_ansible
       - add_ssh_keys: 
           fingerprints: ["c4:84:ca:74:57:67:65:10:97:29:9c:55:dc:e1:a1:b6"]
       - attach_workspace:
