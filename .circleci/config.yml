@@ -1,6 +1,16 @@
 version: 2.1
 
 commands:
+  install_awscli:
+    description: Install AWS CLI v2
+    steps:
+      - run:
+          name: Install AWS CLI v2
+          command: |
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     parameters:
@@ -108,6 +118,7 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
+      - install_awscli
       - run: yum install -y tar gzip
       - run:
           name: Ensure back-end infrastructure exists
@@ -144,6 +155,7 @@ jobs:
       - image: python:3.8-alpine3.15 
     steps:
       - checkout
+      - install_awscli
       - run:
           name: Install dependencies
           command: |
@@ -166,9 +178,10 @@ jobs:
 
   run-migrations:
     docker:
-      - image: circleci/node:13.8.0
+      - image: cimg/node:18.4.0
     steps:
       - checkout
+      - install_awscli
       - run:
           name: Run migrations
           command: |
