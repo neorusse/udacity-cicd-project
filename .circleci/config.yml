@@ -118,7 +118,6 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
-      - install_awscli
       - run: yum install -y tar gzip
       - run:
           name: Ensure back-end infrastructure exists
@@ -155,7 +154,6 @@ jobs:
       - image: python:3.8-alpine3.15 
     steps:
       - checkout
-      - install_awscli
       - run:
           name: Install dependencies
           command: |
